@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Event</title>
+
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #CECECB;
+            padding: 0;
+            margin: 0;
+            width: 800px;
+            height: 570px;
+            font-size: 1.2em;
+            font-weight: 700;
+            overflow: hidden;
+        }
+
+        .all {
+            background-image: url('https://i.imgur.com/D51T1X1.png');
+            background-repeat: no-repeat;
+            background-position: 0px 34px;
+            width: 800px;
+            height: 570px;
+        }
+
+
+        .info {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-size: 1.4em;
+        }
+
+        #killerInfo {
+            display: inline-block;
+            width:50%;
+            text-align: left;
+        }
+
+        #victimInfo {
+            display: inline-block;
+            width:49.15%;
+            text-align: left;
+
+        }
+
+        .infoElse {
+            text-align: center;
+            background-color: #f66;
+            border-radius: 10px;
+            border: 1px solid #f66;
+        }
+
+        #parti {
+            position: absolute;
+            top: 80px;
+            left: 0px;
+            right: 0px;
+            z-index: 10;
+            text-align: center;
+            text-shadow: 1px 1px 3px #000;
+        }
+
+        .damage {
+            color: #990000;
+        }
+
+        .heal {
+            color: #00cc00;
+        }
+
+        .equi {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .equi>div {
+            width: 100%;
+            position: relative;
+        }
+
+        .equi>div>div {
+            width: 100px;
+            position: absolute;
+        }
+
+        .equi>div>div:nth-child(1) {
+            top: 5px;
+            left: 18px;
+        }
+
+        .equi>div>div:nth-child(2) {
+            top: 16px;
+            left: 148px;
+        }
+
+        .equi>div>div:nth-child(3) {
+            top: 5px;
+            left: 279px;
+        }
+
+        .equi>div>div:nth-child(4) {
+            top: 110px;
+            left: 40px;
+        }
+
+        .equi>div>div:nth-child(5) {
+            top: 110px;
+            left: 149px;
+        }
+
+        .equi>div>div:nth-child(6) {
+            top: 110px;
+            left: 257px;
+        }
+
+        .equi>div>div:nth-child(7) {
+            top: 218px;
+            left: 18px;
+        }
+
+        .equi>div>div:nth-child(8) {
+            top: 206px;
+            left: 148px;
+        }
+
+        .equi>div>div:nth-child(9) {
+            top: 218px;
+            left: 279px;
+        }
+
+        .equi>div>div:nth-child(10) {
+            top: 300px;
+            left: 148px;
+        }
+
+        .equi>div>div:nth-child(11) {
+            position: absolute;
+            top: 330px;
+            left: 0px;
+            width: 100%;
+            text-align: left;
+            margin-left: 32px;
+            box-sizing: border-box;
+            padding: 10px 0;
+            z-index: 5;
+        }
+
+        .equi>div>div>img {
+            width: 100%;
+            height: auto;
+        }
+
+        .count {
+            font-size: 11px;
+            right: 15%;
+            bottom: 23%;
+            position: absolute;
+            width: 20%;
+            color: #fff;
+            text-align: center;
+        }
+
+        #victimEquipment>div>div:nth-child(10) {
+            top: 300px;
+            left: 148px;
+        }
+
+        #victimEquipment>div>div:nth-child(11) {
+            position: absolute;
+            top: 330px;
+            left: 248px;
+            width: 100%;
+            text-align: left;
+            box-sizing: border-box;
+            padding: 10px 0;
+            z-index: 5;
+        }
+
+        #victimInventory>div {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            float: left;
+        }
+
+        #victimInventory>div>img {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: -5px;
+            left: -5px;
+        }
+
+        .count2 {
+            font-size: 11px;
+            right: 11%;
+            bottom: 15%;
+            position: absolute;
+            width: 20%;
+            color: #fff;
+            text-align: center;
+        }
+        .kill{
+            background-color: #51ed8d;
+        }
+        .dead{
+            background-color: #ff5b5b;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <!-- all 클래스는 모든 이미지를 커버합니다. -->
+    <div class="all">
+        <!-- 맨 위에 단순 색 밴드를 표시함으로써 우리 길드원이 죽었는지 안죽었는지 체크합니다. 그리고 가운데 날짜 시간을 표시합니다.-->
+        <div id="datetime"
+            style="width: 800px; height: 28px; padding-top: 2px; margin-bottom: 3px; font-size: 20px; text-align: center;">
+        </div>
+        <div class="info" style="width: 800px">
+            <!-- 죽인 사람 이름, 길드, 얼라 표시-->
+            <div id="killerInfo">
+                <div>
+                    <span style="margin-left: 8px; font-weight: 400;">KILLER: </span><span id="killerName"></span>
+                </div>
+                <div style="margin-top: 5px;">
+                    <span style="margin-left: 8px; font-weight: 400;">GUILD: </span>
+                    <span style="overflow: hidden" id="killerGuild"></span>
+                </div>
+            </div>
+            <!-- 죽은 사람 이름, 길드, 얼라 표시-->
+            <div id="victimInfo">
+                <div>
+                    <span style="font-weight: 400;">VICTIM: </span><span id="victimName"></span>
+                </div>
+                <div style="margin-top: 5px;">
+                    <span style="font-weight: 400;">GUILD: </span><span id="victimGuild"></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 죽인사람, 죽인사람 아이템 표시 띠-->
+        <div
+            style="padding-left: 16px;width: 800px;  height: 40px; background-color: #5a5a54; color: white;text-align: left; display: table-cell; vertical-align: middle;">
+            <div style="display: inline-block">KILLER'S GEAR</div>
+            <div style="display: inline-block; margin-left: 267px;">VICTIM'S GEAR</div>
+        </div>
+        <!-- 드랍한 페임량을 표시합니다. -->
+        <div
+            style="width: 800px; z-index: 9999; box-sizing: border-box; text-align: center; top:535px; position: absolute; font-size: 1.5em;">
+            <span class="fame"></span>
+        </div>
+        <div class="main" style="width: 800px; height: 550px; padding: 5px 0;">
+            <!-- 죽인사람의 장비 표시-->
+            <div style="float: left; width: 400px; height: 425px;">
+                <div class="equi" id="killerEquipment">
+                    <div>
+                        <div>
+                            <img src="https://gameinfo.albiononline.com/api/gameinfo/items/T6_2H_AXE.png?count=1&quality=2"/>
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <div>
+                                IP: <span id="killerIP"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 죽은 사람 장비 표시-->
+            <div style="float: left; margin-left:6px; width: 394px; height: 425px;">
+                <div class="equi" id="victimEquipment">
+                    <div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <img />
+                            <div class="count"></div>
+                        </div>
+                        <div>
+                            <div>
+                                IP: <span id="victimIP"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 800px; padding: 5px 0;">
+        <div id="victimInventoryText" style="text-align:center;"></div>
+        <div id="victimInventory">
+        </div>
+    </div>
+</body>
+
+</html>
